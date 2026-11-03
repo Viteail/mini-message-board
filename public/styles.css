@@ -1,0 +1,19 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.message {
+  min-width: 600px;
+  padding: 4px;
+  border: 1px solid slategray;
+  border-radius: 10px;
+}
+
+.link {
+  text-decoration: none;
+  padding: 10px 12px;
+  border: 1px solid slategray;
+  border-radius: 10px;
+}
