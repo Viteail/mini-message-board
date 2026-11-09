@@ -8,12 +8,13 @@
   </head>
   <body>
     <a class="link" href="/">Go back</a>
-    <form method="post" action="/message">
+    <%- include('partials/error') %>
+    <form method="post" action="/new">
       <h2>Add a message</h2>
       <label for="user">Username</label>
-      <input type="text" name="messageUser" id="user" />
+      <input type="text" name="messageUser" id="user" required />
       <label for="message">Message</label>
-      <input type="text" name="messageText" id="message" />
+      <input type="text" name="messageText" id="message" required />
       <button type="submit">Submit</button>
     </form>
   </body>

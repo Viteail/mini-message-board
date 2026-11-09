@@ -1,10 +1,10 @@
 import { Request } from "express";
 
 export interface Message {
-  text: string;
-  user: string;
-  added: Date;
   id: number;
+  message: string;
+  username: string;
+  date: string;
 }
 
 export interface RenderData {

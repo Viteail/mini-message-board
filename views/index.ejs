@@ -8,13 +8,13 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <a class="link" href="/message">Add message</a>
-    <% messages.forEach((message) => { %>
+    <a class="link" href="/new">Add message</a>
+    <% messages.forEach((msg) => { %>
     <div class="message">
-      <p class="text">"<%= message.text %>"</p>
-      <p class="user">by <%= message.user %></p>
-      <p class="date"><%= message.added %></p>
-      <a href="/message/<%= message.id %>">See Details</a>
+      <p class="text">"<%= msg.message %>"</p>
+      <p class="user">by <%= msg.username %></p>
+      <p class="date"><%= msg.date %></p>
+      <a href="/<%= msg.id %>">See Details</a>
     </div>
     <% }); %>
   </body>

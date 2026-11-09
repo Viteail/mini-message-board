@@ -14,18 +14,21 @@
     "url": "git+https://github.com/Viteail/mini-message-board.git"
   },
   "keywords": [],
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/Viteail/mini-message-board/issues"
   },
   "homepage": "https://github.com/Viteail/mini-message-board#readme",
   "dependencies": {
     "ejs": "^7.0.2",
-    "express": "^5.3.0"
+    "express": "^5.3.0",
+    "express-validator": "^7.3.2",
+    "pg": "^8.23.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/node": "^26.6.6",
+    "@types/pg": "^8.23.1",
     "prettier": "^3.9.10",
     "prettier-plugin-ejs": "^1.0.3",
     "tsx": "^4.23.15",

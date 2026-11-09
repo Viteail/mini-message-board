@@ -1,36 +1,50 @@
 import { Request, Response } from "express";
-import { messages } from "../db";
 import {
   MessageBodyRequest,
   MessageParamsRequest,
+  RenderData,
   TypedBodyRequest,
-} from "../types/types";
+} from "../types/types.js";
+import { MessagesRepository } from "../db/queries.js";
+import { validateMessageReq } from "../validation/messages.js";
+import { matchedData, validationResult } from "express-validator";
+
+const messagesRepo = new MessagesRepository();
 
 export class MessageController {
-  public getFormPage(req: Request, res: Response) {
+  async getMessagesPage(req: Request, res: Response) {
+    const messages = await messagesRepo.getAllMessages();
+
+    const renderData: RenderData = {
+      title: "Mini Messageboard",
+      messages,
+    };
+
+    res.render("index", renderData);
+  }
+
+  getFormPage(req: Request, res: Response) {
     res.render("form");
   }
 
-  public getDetailsPage(req: Request<MessageParamsRequest>, res: Response) {
+  async getDetailsPage(req: Request<MessageParamsRequest>, res: Response) {
     const { id } = req.params;
-    const foundMessageById = messages.find((m) => (m.id === Number(id)));
+    const messages = await messagesRepo.getMessageById(Number(id));
 
-    if (foundMessageById) res.render("details", foundMessageById);
-    else res.redirect("/");
+    res.render("details", messages);
   }
 
-  public createMessage(
-    req: TypedBodyRequest<MessageBodyRequest>,
-    res: Response,
-  ) {
-    const { messageUser, messageText } = req.body;
-    const id = messages[messages.length - 1].id + 1;
-    messages.push({
-      text: messageText,
-      user: messageUser,
-      added: new Date(),
-      id,
-    });
-    res.redirect("/");
-  }
+  createMessage = [
+    ...validateMessageReq,
+    async (req: TypedBodyRequest<MessageBodyRequest>, res: Response) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty())
+        return res.status(400).render("form", { errors: errors.array() });
+
+      const { messageUser, messageText } = matchedData<MessageBodyRequest>(req);
+      await messagesRepo.createMessage({ messageText, messageUser });
+
+      res.redirect("/");
+    },
+  ];
 }
